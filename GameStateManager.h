@@ -10,8 +10,6 @@ public:
 	std::vector<GameState*> states;
 	GameState* tempAddingState;
 
-	sf::RenderWindow* window;
-
 	bool isAdding;
 	bool isRemoving;
 	bool isReplacing;

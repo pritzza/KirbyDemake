@@ -1,6 +1,5 @@
 #include "GameData.h"
-
-GameData::GameData(sf::RenderWindow* window)
+#include <iostream>
+GameData::GameData()
 {
-	window = stateMachine.window;
 }

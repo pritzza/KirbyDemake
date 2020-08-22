@@ -12,6 +12,6 @@ public:
 	// othe guy had an input manager here
 
 public:
-	GameData(sf::RenderWindow* window);
+	GameData();
 	//~GameData();
 };

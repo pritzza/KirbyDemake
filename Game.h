@@ -8,7 +8,7 @@ class Game
 {
 public:
 	sf::RenderWindow window;
-	GameData gameData{ &window };
+	GameData gameData;
 
 public:
 	Game();

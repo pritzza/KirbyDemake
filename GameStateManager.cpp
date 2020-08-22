@@ -3,8 +3,7 @@
 
 GameStateManager::GameStateManager()
 {
-	// Start game with this playstate
-	addState(new MenuState(this, window), false);
+
 }
 
 GameStateManager::~GameStateManager()
