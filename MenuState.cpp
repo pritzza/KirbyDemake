@@ -1,53 +1,22 @@
 #include "MenuState.h"
 #include "PlayState.h"
+#include "GameStateManager.h"
+#include <iostream>
 
-MenuState::MenuState(Game* game)
+
+
+void MenuState::handleInput()
 {
-	this->game = game;
-
-    shape.setRadius(150);
-    shape.setOutlineColor(sf::Color::Red);
-    shape.setOutlineThickness(5);
-    shape.setPosition(10, 20);
-}
-
-void MenuState::draw()
-{
-    game->window.draw(shape);
-
-	std::cout << "MenuState draw\n";
+	std::cout << "menu input" << std::endl;
 }
 void MenuState::update()
 {
-	std::cout << "MenuState update\n";
+	std::cout << "menu update" << std::endl;
 }
-void MenuState::handleInput()
+void MenuState::draw()
 {
-    sf::Event event;
+	std::cout << "menu draw" << std::endl;
+	std::cout << "menu calling addState" << std::endl;
 
-    while (this->game->window.pollEvent(event))
-    {
-        switch (event.type)
-        {
-            /* Close the window */
-        case sf::Event::Closed:
-            this->game->window.close();
-            break;
-
-            //pause game
-        case sf::Event::KeyPressed:
-            if (event.key.code == sf::Keyboard::Space)
-                startGame();
-            break;
-
-        }
-    }
-
-	std::cout << "MenuState handleinput\n";
-}
-
-void MenuState::startGame()
-{
-    game->popState();
-    game->pushState(new PlayState(game));
+	stateMachine->addState(new PlayState(stateMachine, window), true);
 }

@@ -1,26 +1,19 @@
 #pragma once
 
-#include <iostream>
-
-#include <vector>
 #include <SFML/Graphics.hpp>
 
-class GameState;
+#include "GameData.h"
 
 class Game
 {
 public:
-	std::vector<GameState*> states;
-
 	sf::RenderWindow window;
+	GameData gameData{ &window };
 
 public:
+	Game();
+	//~Game();
+
 	void gameLoop();
 
-	void popState();
-	GameState* currentState();
-	void pushState(GameState* state);
-
-	Game(GameState* state);
-	~Game();
 };

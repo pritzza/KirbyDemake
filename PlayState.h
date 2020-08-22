@@ -5,16 +5,13 @@
 class PlayState : public GameState
 {
 public:
+	//World w
+	//Player p
 
-	//Player
-	//World
+public:
+	PlayState(GameStateManager* stateMachine, sf::RenderWindow* window) : GameState{ stateMachine, window } {}
 
-	void draw();
-	void update();
 	void handleInput();
-
-	void quitGame();
-
-	PlayState(Game* game);
-	//~PlayState();
+	void update();
+	void draw();
 };

@@ -1,20 +1,22 @@
 #pragma once
 
-#include <iostream>
+#include <SFML/Graphics.hpp>
 
-#include "Game.h"
+class GameStateManager;
 
 class GameState
 {
 public:
+	GameStateManager* stateMachine;
+	sf::RenderWindow* window;
 
-	Game* game;
+public:
+	GameState(GameStateManager* stateMachine, sf::RenderWindow* window)
+	{
+		this->stateMachine = stateMachine; this->window = window;
+	}
 
-	virtual void draw() = 0;
-	virtual void update() = 0;
 	virtual void handleInput() = 0;
-
-	//GameState();
-	//~GameState();
-
+	virtual void update() = 0;
+	virtual void draw() = 0;
 };

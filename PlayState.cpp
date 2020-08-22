@@ -1,46 +1,20 @@
 #include "PlayState.h"
 #include "MenuState.h"
+#include "GameStateManager.h"
+#include <iostream>
 
-PlayState::PlayState(Game* game)
-{
-	this->game = game;
-}
-
-void PlayState::draw()
-{
-	std::cout << "playState draw\n";
-}
-void PlayState::update()
-{
-	std::cout << "playState update\n";
-}
 void PlayState::handleInput()
 {
-    sf::Event event;
-
-    while (this->game->window.pollEvent(event))
-    {
-        switch (event.type)
-        {
-            /* Close the window */
-        case sf::Event::Closed:
-            this->game->window.close();
-            break;
-
-            //pause game
-        case sf::Event::KeyPressed:
-            if (event.key.code == sf::Keyboard::Space)
-                quitGame();
-            break;
-
-        }
-    }
-
-	std::cout << "playState handleinput\n";
+	std::cout << "play input" << std::endl;
 }
-
-void PlayState::quitGame()
+void PlayState::update() 
 {
-	game->popState();
-	game->pushState(new MenuState(game));
+	std::cout << "play update" << std::endl;
+}
+void PlayState::draw() 
+{
+	std::cout << "play draw" << std::endl;
+	std::cout << "play calling addState" << std::endl;
+
+	stateMachine->addState(new MenuState(stateMachine, window), true);
 }

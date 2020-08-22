@@ -2,17 +2,10 @@
 //
 
 #include "Game.h"
-#include "PlayState.h"
 
 int main()
 {
-	Game game {new PlayState(&game)};
-
-	// push_back() correct gamestate
-
-	game.gameLoop();
-	// start gameloop()
-
+	Game game;
 
 	return 0;
 }

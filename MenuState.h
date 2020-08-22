@@ -1,23 +1,17 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-
 #include "GameState.h"
 
 class MenuState : public GameState
 {
 public:
+	//World w
+	//Player p
 
-	//Menuer
-	//World
-	sf::CircleShape shape;
+public:
+	MenuState(GameStateManager* stateMachine, sf::RenderWindow* window) : GameState{ stateMachine, window } {}
 
-	void draw();
-	void update();
 	void handleInput();
-
-	void startGame();
-
-	MenuState(Game* game);
-	//~MenuState();
+	void update();
+	void draw();
 };
