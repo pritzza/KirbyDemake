@@ -1,7 +1,25 @@
 #include "PlayState.h"
 #include "MenuState.h"
-#include "GameStateManager.h"
+
+#include "GameData.h"
+
 #include <iostream>
+
+PlayState::PlayState(GameData* data, sf::RenderWindow* window) : GameState(data, window)
+{
+
+}
+
+PlayState::~PlayState()
+{
+	while (!entities.empty())
+		entities.pop_back();
+}
+
+void PlayState::init()
+{
+
+}
 
 void PlayState::handleInput()
 {
@@ -11,27 +29,61 @@ void PlayState::handleInput()
 	{
 		switch (event.type)
 		{
-		case sf::Event::Closed:
-			window->close();
-			break;
+		case (sf::Event::Closed): window->close(); break; break;
 
-		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Space)
+
+		case (sf::Event::KeyReleased):  // If a key is released
+		{
+			switch (event.key.code)
 			{
-				std::cout << "play calling addState type menu" << std::endl;
-				stateMachine->addState(new MenuState(stateMachine, window), true);
+			case (sf::Keyboard::W): p.jumpFlag = false; break;	// if any movement key is released, stop
+			case (sf::Keyboard::A): p.handleInput('l'); break;
+			case (sf::Keyboard::D): p.handleInput('r'); break;
+			case (sf::Keyboard::Space): p.handleInput('j'); break;
+			case (sf::Keyboard::LShift): p.handleInput('s'); break;
 			}
-			break;
+		}
+		break;
+
+
+		case (sf::Event::KeyPressed):
+		{
+			switch (event.key.code)
+			{
+			case (sf::Keyboard::E):
+				//std::cout << "play calling addState type menu" << std::endl;
+				data->stateMachine.addState(new MenuState(data, window), true);
+				break;
+
+			case (sf::Keyboard::W): p.jump(); break;
+			case (sf::Keyboard::A): p.handleInput('L'); break;
+			case (sf::Keyboard::D): p.handleInput('R'); break;
+			case (sf::Keyboard::Space): p.handleInput('J'); break;
+			case (sf::Keyboard::LShift): p.handleInput('S'); break;
+			}
+		}
+		break;
+
+
 		}
 	}
+}
+//std::cout << "play input" << std::endl;
 
-	std::cout << "play input" << std::endl;
-}
-void PlayState::update() 
+void PlayState::update()
 {
-	std::cout << "play update" << std::endl;
+	for (Entity* e : entities)
+		e->update();
+
+	//std::cout << "play update" << std::endl;
+	//std::cout << "PLAY STATE HAS: " << entities.size() << "ENTITIES";
 }
-void PlayState::draw() 
+void PlayState::draw()
 {
-	std::cout << "play draw" << std::endl;
+	w.t.render(*window);
+
+	for (Entity* e : entities)
+		window->draw(e->rect);
+
+	//std::cout << "play draw" << std::endl;
 }

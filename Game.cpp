@@ -1,14 +1,19 @@
 #include "Game.h"
+
+#include "Constants.h"
+#include "MenuState.h"
+
 #include <iostream>
-#include "PlayState.h"
+
 Game::Game()
 {
-	window.create(sf::VideoMode(800, 600), "Window", sf::Style::Default);
+	window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Window", sf::Style::Default);
 
-	window.setFramerateLimit(5);
+	window.setFramerateLimit(60);
 
 	// Puts first gamestate into play
-	gameData.stateMachine.addState(new PlayState(&gameData.stateMachine, &window), false);
+	std::cout << &gameData.assets;
+	gameData.stateMachine.addState(new MenuState(&gameData, &window), false);
 
 	gameLoop();
 }
@@ -41,6 +46,6 @@ void Game::gameLoop()
 
         window.display();
 
-		std::cout << std::endl;
+		//std::cout << std::endl;
     }
 }

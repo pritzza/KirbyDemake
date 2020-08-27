@@ -2,15 +2,18 @@
 
 #include "GameState.h"
 
+#include <vector>
+
 class MenuState : public GameState
 {
 public:
 	//World w
 	//Player p
-	sf::CircleShape shape;
 
 public:
-	MenuState(GameStateManager* stateMachine, sf::RenderWindow* window);
+	MenuState(GameData* data, sf::RenderWindow* window);
+
+	void init();
 
 	void handleInput();
 	void update();

@@ -1,15 +1,24 @@
 #pragma once
 
 #include "GameState.h"
+#include "World.h"
+#include "Player.h"
+
+#include <vector>
 
 class PlayState : public GameState
 {
 public:
-	//World w
-	//Player p
+	std::vector<Entity*> entities;
+
+	World w;
+	Player p { entities };
 
 public:
-	PlayState(GameStateManager* stateMachine, sf::RenderWindow* window) : GameState{ stateMachine, window } {}
+	PlayState(GameData* data, sf::RenderWindow* window);
+	~PlayState();
+
+	void init();
 
 	void handleInput();
 	void update();

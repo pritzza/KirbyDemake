@@ -2,18 +2,22 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-class GameStateManager;
+
+class GameData;
 
 class GameState
 {
 public:
-	GameStateManager* stateMachine;
+	GameData* data;
 	sf::RenderWindow* window;
 
 public:
-	GameState(GameStateManager* stateMachine, sf::RenderWindow* window) {
-		if (window == nullptr)
-			std::cout << "window nullptr GAMESTATE\n"; this->stateMachine = stateMachine; this->window = window; }
+	GameState(GameData* data, sf::RenderWindow* window)
+		: data{ data }, window{ window } { }
+
+	//~GameState() { assets->textures.clear(); assets->fonts.clear(); }
+
+	virtual void init() = 0;
 
 	virtual void handleInput() = 0;
 	virtual void update() = 0;

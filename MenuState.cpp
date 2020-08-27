@@ -1,14 +1,18 @@
 #include "MenuState.h"
 #include "PlayState.h"
-#include "GameStateManager.h"
+
+#include "GameData.h"
+
 #include <iostream>
 
-MenuState::MenuState(GameStateManager* stateMachine, sf::RenderWindow* window) : GameState{ stateMachine, window }
+MenuState::MenuState(GameData* data, sf::RenderWindow* window) : GameState (data, window)
 {
-	shape.setRadius(150);
-	shape.setOutlineColor(sf::Color::Red);
-	shape.setOutlineThickness(5);
-	shape.setPosition(10, 20);
+
+}
+
+void MenuState::init()
+{
+
 }
 
 void MenuState::handleInput()
@@ -24,26 +28,22 @@ void MenuState::handleInput()
 			break;
 
 		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Space)
+			if (event.key.code == sf::Keyboard::E)
 			{
-				std::cout << "menu calling addState type play" << std::endl;
-				stateMachine->addState(new PlayState(stateMachine, window), true);
+				//std::cout << "menu calling addState type play" << std::endl;
+				data->stateMachine.addState(new PlayState(data, window), true);
 			}
 			break;
 		}
 	}
 
-	std::cout << "menu input" << std::endl;
+	//std::cout << "menu input" << std::endl;
 }
 void MenuState::update()
 {
-	std::cout << "menu update" << std::endl;
+	//std::cout << "menu update" << std::endl;
 }
 void MenuState::draw()
 {
-	window->draw(shape);
-
-
-	std::cout << "menu draw" << std::endl;
-
+	//std::cout << "menu draw" << std::endl;
 }
