@@ -5,7 +5,7 @@
 class World
 {
 public:
-	TileMap t{15,10};
+	TileMap t{16, 12, 0};
 
 public:
 	World();

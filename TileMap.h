@@ -6,6 +6,7 @@
 
 class TileMap
 {
+public:
     int layers;
     float gridSizeF = 50.0f;
     unsigned gridSizeU;
@@ -13,12 +14,15 @@ class TileMap
     std::vector< std::vector < std::vector <Tile*> > > map;
 
 public:
-    TileMap(unsigned width, unsigned height);
+    TileMap(unsigned width, unsigned height, int level);
     ~TileMap();
+
+    void clear();
 
     void update();
     void render(sf::RenderTarget& target);
 
-    void addTile(const float x, const float y);
-    void removeTile();
+
+    Tile* getTileMap(int x, int y, int level);
+    Tile* getTile(int x, int y, char id);
 };

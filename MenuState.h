@@ -12,8 +12,10 @@ public:
 
 public:
 	MenuState(GameData* data, sf::RenderWindow* window);
+	~MenuState();
 
 	void init();
+	void terminate();
 
 	void handleInput();
 	void update();

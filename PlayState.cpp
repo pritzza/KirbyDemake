@@ -12,11 +12,18 @@ PlayState::PlayState(GameData* data, sf::RenderWindow* window) : GameState(data,
 
 PlayState::~PlayState()
 {
+	std::cout << "DECONSTRUCTOR BENIG CALLED";
+
 	while (!entities.empty())
 		entities.pop_back();
 }
 
 void PlayState::init()
+{
+
+}
+
+void PlayState::terminate()
 {
 
 }
@@ -36,7 +43,7 @@ void PlayState::handleInput()
 		{
 			switch (event.key.code)
 			{
-			case (sf::Keyboard::W): p.jumpFlag = false; break;	// if any movement key is released, stop
+				// if any movement key is released, stop
 			case (sf::Keyboard::A): p.handleInput('l'); break;
 			case (sf::Keyboard::D): p.handleInput('r'); break;
 			case (sf::Keyboard::Space): p.handleInput('j'); break;
@@ -73,7 +80,7 @@ void PlayState::handleInput()
 void PlayState::update()
 {
 	for (Entity* e : entities)
-		e->update();
+		e->update(&w.t);
 
 	//std::cout << "play update" << std::endl;
 	//std::cout << "PLAY STATE HAS: " << entities.size() << "ENTITIES";

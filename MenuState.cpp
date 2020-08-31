@@ -10,9 +10,19 @@ MenuState::MenuState(GameData* data, sf::RenderWindow* window) : GameState (data
 
 }
 
+MenuState::~MenuState()
+{
+
+}
+
 void MenuState::init()
 {
 
+}
+
+void MenuState::terminate()
+{
+	// make sure to delete dynamically allocated members here
 }
 
 void MenuState::handleInput()

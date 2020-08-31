@@ -4,13 +4,15 @@
 #include <SFML/Graphics.hpp>
 #include "Constants.h"
 
+class TileMap;
+
 class Entity
 {
 public:
 	sf::RectangleShape rect;
 
-	int width{ 33 };
-	int height{ 66 };
+	int width{ 25 };
+	int height{ 50 };
 
 	float xPos{ WINDOW_WIDTH / 2 };
 	float yPos{ WINDOW_HEIGHT / 2 };
@@ -27,13 +29,14 @@ public:
 public:
 	Entity(std::vector<Entity*>& entities);
 
-	virtual void update(); //will need dt and world ptr to interact with tiles and other enemys and stuff
+	virtual void update(TileMap* t); //will need dt and world ptr to interact with tiles and other enemys and stuff
 
 	void updatePhysics();
+	void updatePosition(TileMap* t);
 	//void updateAnimation();
 	void updateSprite();
 
-	bool isColliding();
+	virtual int isColliding(TileMap* t);
 	void collide();
 
 	void initPhysics();

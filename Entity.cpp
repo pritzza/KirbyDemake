@@ -1,5 +1,7 @@
 #include "Entity.h"
 
+#include "TileMap.h"
+
 #include <iostream>
 
 Entity::Entity(std::vector<Entity*>& entities)
@@ -12,10 +14,31 @@ Entity::Entity(std::vector<Entity*>& entities)
 	entities.push_back(this);
 }
 
-void Entity::update() //will need dt and world ptr to interact with tiles and other enemys and stuff
+void Entity::update(TileMap* t) //will need dt and world ptr to interact with tiles and other enemys and stuff
 {
 	updatePhysics();
+	updatePosition(t);
 	updateSprite();
+}
+
+void Entity::updatePosition(TileMap* t)
+{
+	int collisionCase{ isColliding(t) };	// isCollising() is actuall dealing with all collisions rn
+
+	switch (collisionCase)
+	{
+	case (0):	// no collision
+		break;
+	case (1):	// solid collision
+		break;
+	case (2):	// death collision
+		break;
+	}
+	
+	xPos += xVel;
+	yPos += yVel;
+
+	std::cout << "(x, y): (" << xPos << ", " << yPos << ")   (xVel, yVel): (" << xVel << ", " << yVel << ")\n";
 }
 
 void Entity::initPhysics()
@@ -28,7 +51,6 @@ void Entity::initPhysics()
 
 void Entity::updatePhysics()
 {
-
 	yVel += GRAVITY_FORCE;
 
 	// Deceleration
@@ -36,11 +58,6 @@ void Entity::updatePhysics()
 		xVel *= (drag - 0.15f);
 	if (yVel)
 		yVel *= drag;
-
-	if (isColliding())
-	{
-		collide();
-	}
 
 	// Limit deceleration
 	if (xVel < velocityMin && xVel > -velocityMin)
@@ -60,12 +77,6 @@ void Entity::updatePhysics()
 		else if (yVel < 0)
 			yVel = -velocityMax;
 
-
-	xPos += xVel;
-	yPos += yVel;
-
-	std::cout << "(x, y): (" << xPos << ", " << yPos << ")   (xVel, yVel): (" << xVel << ", " << yVel << ")\n";
-
 }
 
 void Entity::updateSprite()
@@ -73,12 +84,45 @@ void Entity::updateSprite()
 	rect.setPosition(xPos, yPos);
 }
 
-bool Entity::isColliding()
+int Entity::isColliding(TileMap* t)
 {
-	if (yPos > 500)
-		return true;
+	// Currently collision isnt working perfectly because x/y vel values are change as iterating through the 4 collision points
+	for (auto& x : t->map)
+		for (auto& y : x)
+			for (auto& z : y)
+				z->shape.setFillColor(z->color);
 
-	return false;
+	// Goes through and checks tile collisions  based off the top left, top right, bottom left, bottom right corners of an entities "hit" box
+	for (float collisionPointY = yPos; collisionPointY <= yPos + height; collisionPointY += height)
+		for (float collisionPointX = xPos; collisionPointX <= xPos + width; collisionPointX += width)
+		{
+			//std::cout << "( " << collisionPointX << ", " << collisionPointY << ") ";
+
+			const int currentX = static_cast<int> (collisionPointX / t->gridSizeF);
+			const int currentY = static_cast<int> (collisionPointY / t->gridSizeF);
+			const int nextX = static_cast<int> ((collisionPointX + xVel) / t->gridSizeF);
+			const int nextY = static_cast<int> ((collisionPointY + yVel) / t->gridSizeF);
+	
+			// if inside map bounds
+			if (nextX >= 0 && nextX < t->map.size())
+				if (nextY >= 0 && nextY < t->map[0].size())
+				{
+					// This is what makes tiles change color after collision
+					t->map[nextX][nextY][0]->shape.setFillColor(sf::Color::Red);
+	
+					if (t->map[currentX][nextY][0]->isSolid)	// if you set this to [nextX][nextY], you can get wall jumps
+					{
+						yVel = 0;
+					}
+					if (t->map[nextX][currentY][0]->isSolid)
+					{
+						xVel = 0;
+					}
+	
+				}
+		}
+
+	return 0;	// not really utilizing how i wanted collision return values to work rn
 }
 
 void Entity::collide()

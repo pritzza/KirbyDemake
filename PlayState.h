@@ -19,6 +19,7 @@ public:
 	~PlayState();
 
 	void init();
+	void terminate();
 
 	void handleInput();
 	void update();

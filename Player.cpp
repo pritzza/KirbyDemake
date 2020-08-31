@@ -16,23 +16,28 @@ void Player::jump()
 	//}
 }
 
-void Player::update()
+void Player::update(TileMap* t)
 {
 	move();
 
 	updatePhysics();
+	updatePosition(t);
 	updateSprite();
 }
 
 void Player::move()
 {
-	if (rightFlag)
+	if (rightFlag)	// move right
 		xVel += 1.0f * xAcc;
-	if (leftFlag)
+	if (leftFlag)	// move left
 		xVel -= 1.0f * xAcc;
-	if (jumpFlag)
+	if (jumpFlag && jumpFrameIndex < maxJumpFrames)	// jump
+	{
 		yVel = -(yAcc + GRAVITY_FORCE);
+		++jumpFrameIndex;
+	}
 	
+	std::cout << jumpFrameIndex;
 }
 
 void Player::toggleSprint()
@@ -68,6 +73,7 @@ void Player::handleInput(char input)
 		break;
 	case ('j'):
 		jumpFlag = false;
+		jumpFrameIndex = 0;
 		break;
 	case('S'):
 		sprintFlag = true;
