@@ -2,6 +2,7 @@
 
 #include "BlockTile.h"
 #include "AirTile.h"
+#include "Constants.h"
 
 #include <iostream>
 
@@ -49,12 +50,12 @@ Tile* TileMap::getTileMap(int x, int y, int level)
 								 ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x',' ',' ',' ','x',
 								 ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x','x','x',' ',
 								 ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
+								 ' ',' ',' ',' ',' ',' ',' ',' ',' ','x','x',' ',' ',' ',' ',' ',
 								 ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-								 ' ',' ',' ',' ',' ','x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-								 ' ',' ',' ',' ','x','x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-								 ' ',' ',' ','x','x','x',' ',' ',' ','x','x','x',' ',' ',' ',' ',
-								 ' ',' ','x','x','x','x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-								 ' ','x','x','x','x','x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
+								 ' ',' ',' ',' ',' ','x','x','x',' ',' ',' ',' ',' ',' ',' ',' ',
+								 ' ',' ',' ','x','x','x',' ','x','x','x','x','x','x',' ',' ',' ',
+								 ' ','x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x',' ',
+								 ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
 								 'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x', };
 
 		return getTile(x, y, testLevel[y][x]);
@@ -68,15 +69,15 @@ Tile* TileMap::getTile(int x, int y, char id)
 	switch (id)
 	{
 	case (' '):
-		return new AirTile(x, y);
+		return new AirTile(x, y, gridSizeF);
 		break;
 
 	case ('x'):
-		return new BlockTile(x, y);
+		return new BlockTile(x, y, gridSizeF);
 		break;
 
 	default:
-		return new Tile(x, y);
+		return new Tile(x, y, gridSizeF);
 		break;
 	}
 }
@@ -94,7 +95,7 @@ void TileMap::clear()
 		}
 	}
 
-	std::cout << "AFTER CLEAR() : map.size() = " << map.size() << " map[0].size() = " << map[0].size() << " map[0][0].size() = " << map[0][0].size();
+	//std::cout << "AFTER CLEAR() : map.size() = " << map.size() << " map[0].size() = " << map[0].size() << " map[0][0].size() = " << map[0][0].size();
 
 }
 
@@ -103,8 +104,22 @@ void TileMap::update()
 
 }
 
-void TileMap::render(sf::RenderTarget& target)
+void TileMap::render(sf::RenderTarget& target, sf::Vector2i camera)
 {
+	//for (int x = player.x - 1; x <= player.x + 1; ++x)
+	//{
+	//	std::cout << "X: " << x << std::endl;
+	//	for (int y = player.y - 1; y <= player.y + 1; ++y)
+	//	{
+	//		std::cout << "Y: " << y << std::endl;
+	//		for (int z = 0; z < layers; ++z)
+	//		{
+	//			std::cout << "Z: " << z << std::endl;
+	//			map[x][y][z]->render(target);
+	//		}
+	//	}
+	//}
+
 	for (auto& x : map)
 	{
 		for (auto& y : x)

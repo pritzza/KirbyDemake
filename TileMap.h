@@ -3,12 +3,11 @@
 #include "Tile.h"
 #include <SFML/System.hpp>
 
-
 class TileMap
 {
 public:
     int layers;
-    float gridSizeF = 50.0f;
+    float gridSizeF{ 50.0f };
     unsigned gridSizeU;
     sf::Vector2u maxSize;
     std::vector< std::vector < std::vector <Tile*> > > map;
@@ -20,8 +19,7 @@ public:
     void clear();
 
     void update();
-    void render(sf::RenderTarget& target);
-
+    void render(sf::RenderTarget& target, sf::Vector2i player);
 
     Tile* getTileMap(int x, int y, int level);
     Tile* getTile(int x, int y, char id);

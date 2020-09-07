@@ -5,5 +5,5 @@
 class BlockTile : public Tile
 {
 public:
-	BlockTile(float x, float y);
+	BlockTile(float x, float y, float t);
 };

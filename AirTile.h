@@ -5,5 +5,5 @@
 class AirTile : public Tile
 {
 public:
-	AirTile(float x, float y);
+	AirTile(float x, float y, float t);
 };

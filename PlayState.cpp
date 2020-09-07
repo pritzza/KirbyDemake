@@ -7,12 +7,12 @@
 
 PlayState::PlayState(GameData* data, sf::RenderWindow* window) : GameState(data, window)
 {
-
+	init();
 }
 
 PlayState::~PlayState()
 {
-	std::cout << "DECONSTRUCTOR BENIG CALLED";
+	data->assets.clearAssets();
 
 	while (!entities.empty())
 		entities.pop_back();
@@ -20,12 +20,25 @@ PlayState::~PlayState()
 
 void PlayState::init()
 {
+	for (auto& e : entities)
+		e->init(&data->assets);
 
+	initDebugText();
 }
 
 void PlayState::terminate()
 {
 
+}
+
+void PlayState::initDebugText()
+{
+	data->assets.loadFont("f", "res/bahnschrift.ttf");
+
+	debugText.setFont(*data->assets.getFont("f"));
+
+	debugText.setCharacterSize(24);
+	debugText.setFillColor(sf::Color::Black);
 }
 
 void PlayState::handleInput()
@@ -80,17 +93,19 @@ void PlayState::handleInput()
 void PlayState::update()
 {
 	for (Entity* e : entities)
-		e->update(&w.t);
+		e->update(&w.t, debugText);
 
 	//std::cout << "play update" << std::endl;
 	//std::cout << "PLAY STATE HAS: " << entities.size() << "ENTITIES";
 }
 void PlayState::draw()
 {
-	w.t.render(*window);
+	w.t.render(*window, sf::Vector2i(static_cast<int>((p.xPos + p.width / 2) / w.t.gridSizeF), static_cast<int>((p.yPos + p.height / 2) / w.t.gridSizeF)));
 
 	for (Entity* e : entities)
 		window->draw(e->rect);
+
+	window->draw(debugText);
 
 	//std::cout << "play draw" << std::endl;
 }

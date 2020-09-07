@@ -5,23 +5,31 @@
 
 //Player::Player(std::vector<Entity*>& entities) : Entity (entities)
 //{
-//	//std::cout << "player constrcutor";
+//	
 //}
+
+Player::~Player()
+{
+
+}
+
+void Player::init(AssetManager* assets)
+{
+	initSprite(assets);
+	initPhysics();
+}
 
 void Player::jump()
 {
-	//if (jumpFlag)
-	//{
-	//	yVel = -100;
-	//}
+
 }
 
-void Player::update(TileMap* t)
+void Player::update(TileMap* t, sf::Text& debugText)
 {
 	move();
 
 	updatePhysics();
-	updatePosition(t);
+	updatePosition(t, debugText);
 	updateSprite();
 }
 
@@ -37,7 +45,7 @@ void Player::move()
 		++jumpFrameIndex;
 	}
 	
-	std::cout << jumpFrameIndex;
+	//std::cout << jumpFrameIndex;
 }
 
 void Player::toggleSprint()

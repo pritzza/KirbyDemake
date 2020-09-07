@@ -4,7 +4,18 @@
 
 AssetManager::AssetManager() {}
 
-AssetManager::~AssetManager() {}
+AssetManager::~AssetManager() 
+{
+	clearAssets();
+}
+
+void AssetManager::clearAssets()
+{
+	for (auto s : textKeys)
+		textures.erase(s);
+	for (auto s : fontKeys)
+		textures.erase(s);
+}
 
 void AssetManager::loadTexture(std::string name, std::string fileName)
 {
@@ -12,15 +23,16 @@ void AssetManager::loadTexture(std::string name, std::string fileName)
 
 	if (tex.loadFromFile(fileName))
 	{
+		textKeys.push_back(fileName);
 		this->textures[name] = tex;
 	}
 }
 
-sf::Texture AssetManager::getTexture(std::string name)
+sf::Texture* AssetManager::getTexture(std::string name)
 {
 	try
 	{
-		return textures.at(name);
+		return &textures.at(name);
 	}
 	catch (std::out_of_range& const e)
 	{
@@ -34,15 +46,16 @@ void AssetManager::loadFont(std::string name, std::string fileName)
 
 	if (font.loadFromFile(fileName))
 	{
+		fontKeys.push_back(fileName);
 		this->fonts[name] = font;
 	}
 }
 
-sf::Font AssetManager::getFont(std::string name)
+sf::Font* AssetManager::getFont(std::string name)
 {
 	try
 	{
-		return fonts.at(name);
+		return &fonts.at(name);
 	}
 	catch (std::out_of_range& const e)
 	{

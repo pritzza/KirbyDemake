@@ -12,7 +12,9 @@ public:
 	std::vector<Entity*> entities;
 
 	World w;
-	Player p { entities };
+	Player p{ entities };
+
+	sf::Text debugText;
 
 public:
 	PlayState(GameData* data, sf::RenderWindow* window);
@@ -20,6 +22,8 @@ public:
 
 	void init();
 	void terminate();
+
+	void initDebugText();
 
 	void handleInput();
 	void update();

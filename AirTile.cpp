@@ -1,8 +1,9 @@
 #include "AirTile.h"
 
-AirTile::AirTile(float x, float y) : Tile(x, y) // i dont know the syntax to do this
+AirTile::AirTile(float x, float y, float t) : Tile(x, y, t) // i dont know the syntax to do this
 {
+	collisionType = 0;
+
 	color = sf::Color::Cyan;
-	isSolid = false;
 	shape.setFillColor(color);
 }
